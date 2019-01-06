@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'globals.dart' as globals;
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// todo: move login methods to its own class
 
 void main() => runApp(MyApp());
 
@@ -11,9 +14,36 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to Flutter',
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => Home(),
+        '/': (BuildContext context) => SplashPage(),
+        '/home': (BuildContext context) => Home(),
+        // '/splashscreen': (BuildContext context) => SplashScreen(),
         '/login': (BuildContext context) => Login()
       },
+    );
+  }
+}
+
+class SplashPage extends StatelessWidget {
+  Future<bool> checkIfAuthenticated() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool loggedIn = (prefs.getBool('loggedIn') ?? false);
+    return loggedIn;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    checkIfAuthenticated().then((loggedIn) {
+      if (loggedIn) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
+    });
+
+    return new Scaffold(
+      body: new Center(
+        child: Text("SPLASH SCREEN"),
+      ),
     );
   }
 }
@@ -22,13 +52,10 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('HOME TITLE'),
-      ),
-      body: new FlatButton(
-          onPressed: () => Navigator.of(context).pushNamed("/login"),
-          child: new Text("AUTH SCREEN")),
-    );
+        appBar: AppBar(
+          title: Text('HOME TITLE'),
+        ),
+        body: Text("TEST")); //Login());
   }
 }
 
@@ -96,15 +123,18 @@ class LoginState extends State<Login> {
       content: Text("Logging in..."),
     ));
 
-    final response = await http.post(globals.login_url,
-        body: {"email": email, "password": password}).then((response) {
-      String _message = json.decode(response.body)['message'];
+    final response = await http
+        .post(globals.login_url, body: {"email": email, "password": password});
 
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text(_message),
-      ));
-    });
-    return response;
+    String _message = json.decode(response.body)['message'];
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('loggedIn', true);
+
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text(_message),
+    ));
+    Navigator.pushReplacementNamed(context, '/home');
   }
 }
 
