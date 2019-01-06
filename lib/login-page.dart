@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'globals.dart' as globals;
 import 'dart:convert';
-import 'signup.dart';
+import 'signup-page.dart';
+import 'auth.dart';
 
 // todo: move login methods to its own class
 
@@ -66,7 +66,7 @@ class LoginState extends State<LoginPage> {
     );
   }
 
-  Future<http.Response> _login(email, password) async {
+  void _login(email, password) async {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text("Logging in..."),
     ));
@@ -75,21 +75,14 @@ class LoginState extends State<LoginPage> {
         .post(globals.login_url, body: {"email": email, "password": password});
 
     String _message = json.decode(response.body)['message'];
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // todo: finish this
-    bool loggedIn = false;
-    await prefs.setBool('loggedIn', loggedIn);
-
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text(_message),
     ));
-    if (loggedIn) {
+
+    if (response.statusCode == 200) {
+      String token = json.decode(response.body)['data']['token'];
+      await Auth().login(token);
       Navigator.pushReplacementNamed(context, '/home');
-    } else {
-      _scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text(_message),
-      ));
     }
   }
 }

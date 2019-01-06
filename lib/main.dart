@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
-import 'splashscreen.dart';
+import 'login-page.dart';
+import 'splash-page.dart';
+import 'auth.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,9 +24,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('HOME'),
-        ),
-        body: Text("This is home."));
+      appBar: AppBar(
+        title: Text('HOME'),
+      ),
+      body: Column(children: <Widget>[
+        Text("This is home."),
+        RaisedButton(
+          child: Text("Logout"),
+          onPressed: () {
+            Auth().logout();
+            Navigator.pushReplacementNamed(context, '/login');
+          },
+        )
+      ]),
+    );
   }
 }
