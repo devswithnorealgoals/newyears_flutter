@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'login-page.dart';
-import 'splash-page.dart';
-import 'auth.dart';
+import 'settings-page.dart';
+import 'app_state_container.dart';
+import 'models/app_state.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(new AppStateContainer(
+      child: MyApp(),
+    ));
 
 class MyApp extends StatelessWidget {
   @override
@@ -11,32 +14,57 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to Flutter',
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext context) => SplashPage(),
-        '/home': (BuildContext context) => HomePage(),
+        // '/': (BuildContext context) => SplashPage(),
+        '/': (BuildContext context) => HomePage(),
         // '/splashscreen': (BuildContext context) => SplashScreen(),
-        '/login': (BuildContext context) => LoginPage()
+        '/login': (BuildContext context) => LoginPage(),
+        '/settings': (BuildContext context) => SettingsPage(),
       },
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  HomeState createState() {
+    return HomeState();
+  }
+}
+
+class HomeState extends State<HomePage> {
+  AppState appState;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('HOME'),
-      ),
-      body: Column(children: <Widget>[
-        Text("This is home."),
-        RaisedButton(
-          child: Text("Logout"),
-          onPressed: () {
-            Auth().logout();
-            Navigator.pushReplacementNamed(context, '/login');
-          },
-        )
-      ]),
-    );
+    appState = AppStateContainer.of(context).state;
+    return appState.authenticated
+        ? Scaffold(
+            appBar: AppBar(title: Text('HOME'), actions: <Widget>[
+              // action button
+              IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/settings');
+                },
+              ),
+            ]),
+            body: ListView(
+              children: <Widget>[
+                ListTile(
+                  leading: Icon(Icons.map),
+                  title: Text('Map'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.photo_album),
+                  title: Text('Album'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.phone),
+                  title: Text('Phone'),
+                ),
+              ],
+            ),
+          )
+        : LoginPage();
   }
 }

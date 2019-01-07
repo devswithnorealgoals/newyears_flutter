@@ -4,7 +4,7 @@ import 'globals.dart' as globals;
 import 'dart:convert';
 import 'signup-page.dart';
 import 'auth.dart';
-
+import 'app_state_container.dart';
 // todo: move login methods to its own class
 
 class LoginPage extends StatefulWidget {
@@ -23,6 +23,7 @@ class LoginState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final container = AppStateContainer.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
@@ -45,9 +46,9 @@ class LoginState extends State<LoginPage> {
               },
             ),
             RaisedButton(
-              onPressed: () {
+              onPressed: () async {
                 _formKey.currentState.save();
-                _login(_email, _password);
+                await _login(container, _email, _password);
               },
               child: Text("Login"),
             ),
@@ -66,11 +67,10 @@ class LoginState extends State<LoginPage> {
     );
   }
 
-  void _login(email, password) async {
+  Future _login(container, email, password) async {
     _scaffoldKey.currentState.showSnackBar(SnackBar(
       content: Text("Logging in..."),
     ));
-
     final response = await http
         .post(globals.login_url, body: {"email": email, "password": password});
 
@@ -81,8 +81,8 @@ class LoginState extends State<LoginPage> {
 
     if (response.statusCode == 200) {
       String token = json.decode(response.body)['data']['token'];
-      await Auth().login(token);
-      Navigator.pushReplacementNamed(context, '/home');
+      Auth().login(token);
+      container.login();
     }
   }
 }
