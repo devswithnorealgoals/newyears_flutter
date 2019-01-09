@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'globals.dart' as globals;
+import 'package:newyears_flutter/app_state_container.dart';
+import 'package:newyears_flutter/globals.dart' as globals;
+import 'package:newyears_flutter/models/auth.dart';
 import 'dart:convert';
-import 'signup-page.dart';
-import 'auth.dart';
-import 'app_state_container.dart';
+
+import 'package:newyears_flutter/pages/signup_page.dart';
 // todo: move login methods to its own class
 
 class LoginPage extends StatefulWidget {

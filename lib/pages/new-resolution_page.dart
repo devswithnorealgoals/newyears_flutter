@@ -1,8 +1,9 @@
 import 'dart:convert';
+import 'package:newyears_flutter/models/resolution.dart';
+
 import 'package:flutter/material.dart';
-import 'package:newyears_flutter/resolution.dart';
-import 'package:newyears_flutter/auth.dart';
-import 'package:newyears_flutter/user.dart';
+import 'package:newyears_flutter/models/auth.dart';
+import 'package:newyears_flutter/models/user.dart';
 
 class NewResolutionPage extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class NewResolutionState extends State<NewResolutionPage> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Resolution _resolution = Resolution();
+  Resolution _resolution;
 
   @override
   Widget build(BuildContext context) {

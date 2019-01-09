@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newyears_flutter/resolution.dart';
+import 'package:newyears_flutter/models/resolution.dart';
 
 class ResolutionPage extends StatefulWidget {
   Resolution _resolution;

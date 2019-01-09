@@ -1,8 +1,9 @@
 // https://flutterbyexample.com/set-up-app-loading
+import 'package:newyears_flutter/models/auth.dart';
+
 import 'models/app_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'auth.dart';
 
 class AppStateContainer extends StatefulWidget {
   // Your apps state is managed by the container

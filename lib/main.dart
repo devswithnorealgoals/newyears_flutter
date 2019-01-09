@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'login-page.dart';
-import 'settings-page.dart';
+import 'package:newyears_flutter/models/auth.dart';
+import 'package:newyears_flutter/models/resolution.dart';
+import 'package:newyears_flutter/models/user.dart';
+import 'package:newyears_flutter/pages/login_page.dart';
+import 'package:newyears_flutter/pages/settings_page.dart';
+
 import 'app_state_container.dart';
 import 'models/app_state.dart';
 import 'pages/new-resolution_page.dart';
-import 'auth.dart';
-import 'resolution.dart';
-import 'user.dart';
 import 'pages/resolution_page.dart';
 
 void main() => runApp(new AppStateContainer(

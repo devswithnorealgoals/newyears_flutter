@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'globals.dart' as globals;
+import 'package:newyears_flutter/globals.dart' as globals;
 
 class Resolution {
   String name;

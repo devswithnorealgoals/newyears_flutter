@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'jwt.dart' as jwt;
+import '../helpers/jwt.dart' as jwt;
 import 'user.dart';
 
 class Auth {

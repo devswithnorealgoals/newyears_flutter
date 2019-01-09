@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'auth.dart';
-import 'user.dart';
-import 'app_state_container.dart';
-
-// todo: move login methods to its own class
+import 'package:newyears_flutter/app_state_container.dart';
+import 'package:newyears_flutter/models/auth.dart';
+import 'package:newyears_flutter/models/user.dart';
 
 class SettingsPage extends StatefulWidget {
   @override

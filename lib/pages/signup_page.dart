@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'user.dart';
+
+import 'package:newyears_flutter/models/user.dart';
 
 class SignupPage extends StatefulWidget {
   @override
