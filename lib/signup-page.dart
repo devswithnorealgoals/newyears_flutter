@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'globals.dart' as globals;
 import 'dart:convert';
 import 'user.dart';
 

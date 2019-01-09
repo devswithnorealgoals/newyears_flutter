@@ -46,7 +46,7 @@ class _AppStateContainerState extends State<AppStateContainer> {
     } else {
       state = AppState();
       Auth().loggedIn().then((loggedIn) {
-        setState(() => state.authenticated = false);
+        loggedIn ? login() : logout();
       });
     }
   }

@@ -5,6 +5,7 @@ import 'resolution.dart';
 import 'dart:convert';
 
 class User {
+  String id;
   String firstName;
   String lastName;
   String email;
@@ -14,7 +15,8 @@ class User {
   User();
 
   User.fromJson(Map<String, dynamic> json)
-      : firstName = json['firstName'],
+      : id = json['_id'],
+        firstName = json['firstName'],
         lastName = json['lastName'],
         email = json['email'],
         resolutions = (json['resolutions'] as List)
@@ -22,6 +24,7 @@ class User {
             .toList();
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'firstName': firstName,
         'lastName': lastName,
         'email': email,

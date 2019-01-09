@@ -37,4 +37,8 @@ class Auth {
     }
     return _currentUser;
   }
+
+  setCurrentUser(User user) {
+    this._currentUser = user;
+  }
 }
