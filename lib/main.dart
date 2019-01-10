@@ -44,6 +44,7 @@ class HomeState extends State<HomePage> {
     appState = AppStateContainer.of(context).state;
 
     if (appState.authenticated) {
+      _setUser();
       return Scaffold(
           appBar: AppBar(title: Text('HOME'), actions: <Widget>[
             // action button
@@ -69,7 +70,6 @@ class HomeState extends State<HomePage> {
   }
 
   Widget _buildResolutionList() {
-    _setUser();
     List<Resolution> resolutions = _user == null ? [] : _user.resolutions;
     return ListView(
         children: resolutions.map((res) {

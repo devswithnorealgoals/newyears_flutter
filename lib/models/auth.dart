@@ -32,6 +32,7 @@ class Auth {
     if (_currentUser == null) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String token = prefs.getString('token');
+      print(token);
       Map<String, dynamic> payload = jwt.parseJwt(token);
       _currentUser = await User.show(payload['_id']);
     }
